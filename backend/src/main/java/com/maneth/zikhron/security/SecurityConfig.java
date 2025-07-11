@@ -44,6 +44,9 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
+    //For below beans we should have manually configure because we use customUserDetailsService. If we use defalu one we dont have to override
+    // Here since we use jwt tokens we have to give our authProvider, password encoder.
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -57,6 +60,9 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
+    //Since we call this method manually when creating the jwt token we have to define this bean.
+    //Otherwise it will not register as a bean.
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
